@@ -3,9 +3,16 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
+  // 👇 AGREGA ESTA LÍNEA AQUÍ AL PRINCIPIO
+  site: 'https://web-alex-portafolio.pages.dev',
+
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+
+  integrations: [sitemap()]
 });
