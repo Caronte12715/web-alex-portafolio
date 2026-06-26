@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const email = "david.guevara@ejemplo.com";
+const githubUrl = "https://github.com/Caronte12715";
+const linkedinUrl = "https://linkedin.com";
+---
+
+<Layout title="Contacto | David Guevara">
+  <section class="py-10 max-w-4xl mx-auto">
+    <!-- Header de Sección -->
+    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-2 font-mono">
+      <span class="text-cyan-400">./</span> CANAL_DE_CONTACTO
+      <span class="text-gray-600 text-sm font-normal ml-auto hidden md:block">Status: Ready to transmit</span>
+    </h2>
+
+    <p class="text-gray-400 font-mono text-sm mb-12 max-w-2xl border-l-2 border-cyan-400/30 pl-4">
+      ¿Tienes un proyecto en mente, una consulta sobre mis servicios de desarrollo, o deseas integrar flujos eficientes en tu sitio web? Escríbeme y responderé en un lapso de 24 horas.
+    </p>
+
+    <!-- Layout en dos columnas -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      
+      <!-- Columna Formulario (7 Cols) -->
+      <div class="md:col-span-7 border border-white/10 bg-black/40 p-6 md:p-8 rounded-lg backdrop-blur-sm shadow-xl">
+        <form id="contact-form" class="space-y-6">
+          <div class="space-y-2">
+            <label for="name" class="block text-xs font-mono text-cyan-400 uppercase tracking-widest">
+              [ NOMBRE_REMITENTE ]
+            </label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              required
+              placeholder="Ej. Alex Guevara"
+              class="w-full bg-[#0a0a0a] border border-white/10 hover:border-white/20 focus:border-cyan-400 focus:outline-none rounded px-4 py-3 text-white font-mono text-sm transition-colors"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label for="email" class="block text-xs font-mono text-cyan-400 uppercase tracking-widest">
+              [ DIRECCION_EMAIL ]
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              required
+              placeholder="nombre@ejemplo.com"
+              class="w-full bg-[#0a0a0a] border border-white/10 hover:border-white/20 focus:border-cyan-400 focus:outline-none rounded px-4 py-3 text-white font-mono text-sm transition-colors"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label for="message" class="block text-xs font-mono text-cyan-400 uppercase tracking-widest">
+              [ DATOS_MENSAJE ]
+            </label>
+            <textarea 
+              id="message" 
+              name="message" 
+              required
+              rows="5"
+              placeholder="Hola David, me interesa desarrollar un sitio web..."
+              class="w-full bg-[#0a0a0a] border border-white/10 hover:border-white/20 focus:border-cyan-400 focus:outline-none rounded px-4 py-3 text-white font-mono text-sm transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full group relative px-6 py-3.5 font-bold font-mono text-black bg-white overflow-hidden rounded transition-all hover:bg-cyan-400 hover:text-white hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
+          >
+            ENVIAR_MENSAJE
+            <span class="absolute right-2 top-2 w-2 h-2 bg-black/20 rounded-full group-hover:bg-white/50"></span>
+          </button>
+        </form>
+
+        <!-- Consola de Estado / Log de Transmisión (Simulación) -->
+        <div id="status-console" class="hidden mt-6 p-4 border border-cyan-400/20 bg-black/50 rounded font-mono text-xs space-y-1">
+          <p class="text-cyan-400" id="log-line-1">&gt; Iniciando protocolo de transmisión...</p>
+          <p class="text-gray-500" id="log-line-2"></p>
+          <p class="text-gray-500" id="log-line-3"></p>
+          <p class="text-green-400 hidden" id="log-success">&gt; Hecho. Mensaje enviado correctamente.</p>
+        </div>
+      </div>
+
+      <!-- Columna Info de Enlaces (5 Cols) -->
+      <div class="md:col-span-5 space-y-6">
+        
+        <!-- Tarjeta de canales directos -->
+        <div class="border border-white/10 bg-black/40 p-6 rounded-lg backdrop-blur-sm">
+          <h3 class="text-base font-bold text-white mb-4 font-mono uppercase tracking-wider">
+            [ CONTACTO_DIRECTO ]
+          </h3>
+          <ul class="space-y-4 font-mono text-sm">
+            <li class="flex items-center gap-3">
+              <span class="text-cyan-400 text-lg">✉</span>
+              <a href={`mailto:${email}`} class="text-gray-300 hover:text-cyan-400 hover:underline transition-colors break-all">
+                {email}
+              </a>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-purple-400 text-lg">🔗</span>
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-purple-400 hover:underline transition-colors">
+                github.com/Caronte12715
+              </a>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-purple-400 text-lg">💼</span>
+              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-purple-400 hover:underline transition-colors">
+                linkedin.com/in/david-guevara
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tarjeta estado de red -->
+        <div class="border border-white/10 bg-black/40 p-6 rounded-lg backdrop-blur-sm font-mono text-xs space-y-3 text-gray-500">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span class="text-gray-300">RED_ACTIVA // SECURE_SHELL</span>
+          </div>
+          <p>PING: 8ms</p>
+          <p>HOST: localhost:4321</p>
+          <p>PROTOCOLO: HTTPS/TLSv1.3</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const consoleEl = document.getElementById("status-console");
+  const line2 = document.getElementById("log-line-2");
+  const line3 = document.getElementById("log-line-3");
+  const successLine = document.getElementById("log-success");
+
+  if (form && consoleEl && line2 && line3 && successLine) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      // Show log console
+      consoleEl.classList.remove("hidden");
+      successLine.classList.add("hidden");
+      line2.textContent = "";
+      line3.textContent = "";
+
+      // Step 1: Simulate connection
+      setTimeout(() => {
+        line2.textContent = "> Conectando con el servidor de correo...";
+        line2.classList.add("text-cyan-400");
+      }, 800);
+
+      // Step 2: Encrypting
+      setTimeout(() => {
+        line3.textContent = "> Encriptando datos del remitente...";
+        line3.classList.add("text-cyan-400");
+      }, 1600);
+
+      // Step 3: Success
+      setTimeout(() => {
+        successLine.classList.remove("hidden");
+        form.reset();
+      }, 2400);
+    });
+  }
+</script>

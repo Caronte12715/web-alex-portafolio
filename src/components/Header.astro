@@ -1,0 +1,110 @@
+---
+const navItems = [
+  { name: "Inicio", path: "/" },
+  { name: "Sobre Mí", path: "/sobre-mi" },
+  { name: "Proyectos", path: "/proyectos" },
+  { name: "Habilidades", path: "/habilidades" },
+  { name: "Contacto", path: "/contacto" }
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0a0a0a]/70 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 group">
+      <div class="w-8 h-8 rounded border border-cyan-400/50 flex items-center justify-center bg-cyan-400/5 shadow-[0_0_10px_rgba(34,211,238,0.2)] group-hover:border-cyan-400 transition-all duration-300">
+        <span class="text-cyan-400 font-bold font-mono text-sm">DG</span>
+      </div>
+      <span class="text-white font-mono font-bold text-sm tracking-wider hidden sm:inline-block group-hover:text-cyan-400 transition-colors">
+        DAVID_GUEVARA
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-1">
+      {navItems.map((item) => {
+        // Matches home "/" exactly, and subpages by prefix
+        const isActive = item.path === "/" 
+          ? currentPath === "/" || currentPath === ""
+          : currentPath.startsWith(item.path);
+        
+        return (
+          <a
+            href={item.path}
+            class={`px-4 py-2 text-sm font-mono tracking-wider transition-all duration-300 relative group ${
+              isActive 
+                ? "text-cyan-400 font-semibold" 
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            {item.name}
+            {isActive && (
+              <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"></span>
+            )}
+            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-cyan-400/0 group-hover:bg-cyan-400/50 transition-all duration-300 origin-center scale-x-0 group-hover:scale-x-100"></span>
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      id="menu-btn" 
+      class="md:hidden p-2 text-gray-400 hover:text-white focus:outline-none"
+      aria-label="Abrir menú"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Nav Panel -->
+  <div 
+    id="mobile-menu" 
+    class="hidden md:hidden w-full border-t border-white/5 bg-[#0a0a0a]/95 backdrop-blur-lg px-4 py-4 space-y-2 animate-fade-in"
+  >
+    {navItems.map((item) => {
+      const isActive = item.path === "/" 
+        ? currentPath === "/" || currentPath === ""
+        : currentPath.startsWith(item.path);
+
+      return (
+        <a
+          href={item.path}
+          class={`block px-4 py-3 text-base font-mono rounded transition-colors ${
+            isActive 
+              ? "text-cyan-400 bg-cyan-400/5 border-l-2 border-cyan-400" 
+              : "text-gray-400 hover:text-white hover:bg-white/5"
+          }`}
+        >
+          {item.name}
+        </a>
+      );
+    })}
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+
+  if (menuBtn && mobileMenu && menuIcon) {
+    menuBtn.addEventListener("click", () => {
+      const isExpanded = mobileMenu.classList.contains("hidden");
+      
+      if (isExpanded) {
+        mobileMenu.classList.remove("hidden");
+        // Change to "X" close icon
+        menuIcon.setAttribute("d", "M6 18L18 6M6 6l12 12");
+      } else {
+        mobileMenu.classList.add("hidden");
+        // Change back to "hamburger" icon
+        menuIcon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+      }
+    });
+  }
+</script>

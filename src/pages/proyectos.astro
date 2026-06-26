@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const categories = ["TODOS", "FRONTEND", "BACKEND", "ESCRITORIO"];
+
+const projects = [
+  {
+    title: "ORBIT (GRAPHICSLIVE)",
+    description: "Motor de gráficos profesionales para transmisiones en vivo y streaming. Desarrollado como aplicación de escritorio con Electron, sincronización en tiempo real vía WebSockets y control remoto móvil.",
+    tech: ["Electron", "Express", "WebSockets", "Node.js"],
+    status: "v1.1.0",
+    link: "https://github.com/Caronte12715/graphicslive",
+    category: "BACKEND"
+  },
+  {
+    title: "COLEGIO CRISMAG",
+    description: "Sitio institucional educativo de alta velocidad. Migrado de HTML/JS estático a Astro para mejorar sustancialmente el rendimiento, accesibilidad y SEO global del centro escolar.",
+    tech: ["Astro", "JavaScript", "CSS", "Tailwind"],
+    status: "Online",
+    link: "https://www.colegiocrismag.com",
+    category: "FRONTEND"
+  },
+  {
+    title: "MAL ESPÍRITU",
+    description: "Espacio de experimentación creativa y desarrollo web personal. Funciona como un sandbox para probar nuevas micro-interacciones, efectos visuales y layouts experimentales.",
+    tech: ["Astro", "HTML", "CSS"],
+    status: "En desarrollo",
+    link: "https://mal-espiritu.pages.dev",
+    category: "FRONTEND"
+  },
+  {
+    title: "MI PORTAFOLIO",
+    description: "Identidad digital desarrollada con arquitectura moderna, estilos neón futuristas y asistencia en pair programming mediante Inteligencia Artificial (Gemini).",
+    tech: ["Astro", "Tailwind", "Gemini AI"],
+    status: "v1.0",
+    link: "#",
+    category: "FRONTEND"
+  }
+];
+---
+
+<Layout title="Proyectos | David Guevara">
+  <section class="py-10 max-w-4xl mx-auto">
+    <!-- Header de Sección -->
+    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-2 font-mono">
+      <span class="text-cyan-400">./</span> PROYECTOS_DESTACADOS
+      <span class="text-gray-600 text-sm font-normal ml-auto hidden md:block">Index of /projects</span>
+    </h2>
+
+    <p class="text-gray-400 font-mono text-sm mb-10 max-w-2xl border-l-2 border-cyan-400/30 pl-4">
+      Explora la colección de aplicaciones web, proyectos institucionales y herramientas de transmisión en vivo que he construido. Utiliza los filtros para clasificar por área de desarrollo.
+    </p>
+
+    <!-- Filtros Interactivos (Client-side) -->
+    <div class="flex flex-wrap gap-2 mb-10 font-mono text-xs" id="filters-container">
+      {categories.map((cat) => (
+        <button
+          data-filter={cat.toLowerCase()}
+          class={`filter-btn px-4 py-2 border transition-all duration-300 rounded cursor-pointer ${
+            cat === "TODOS"
+              ? "border-cyan-400 text-cyan-400 bg-cyan-400/5 shadow-[0_0_10px_rgba(34,211,238,0.15)]"
+              : "border-white/10 text-gray-400 hover:text-white hover:border-white/30"
+          }`}
+        >
+          [{cat}]
+        </button>
+      ))}
+    </div>
+
+    <!-- Grid de Proyectos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
+      {projects.map((project) => (
+        <div 
+          data-category={project.category.toLowerCase()}
+          class="project-card group relative bg-black/50 border border-white/10 hover:border-cyan-400/50 rounded-lg p-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] hover:-translate-y-1 flex flex-col justify-between"
+        >
+          <!-- Indicador superior -->
+          <div class="absolute top-0 right-0 p-2 opacity-50">
+            <div class="w-2 h-2 bg-gray-500 rounded-full group-hover:bg-cyan-400 transition-colors duration-300"></div>
+          </div>
+
+          <div>
+            <span class="text-xs font-mono text-cyan-400 mb-2 block">{project.status}</span>
+            <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors duration-300 font-mono">
+              {project.title}
+            </h3>
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+              {project.description}
+            </p>
+          </div>
+
+          <div>
+            <!-- Tecnologías -->
+            <div class="flex flex-wrap gap-2 mb-6 pt-4 border-t border-white/5">
+              {project.tech.map((t) => (
+                <span class="text-xs font-mono text-gray-500 bg-white/5 px-2.5 py-1 rounded group-hover:text-gray-300 transition-colors duration-300">
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <!-- Botones/Enlaces -->
+            <div class="flex gap-4">
+              {project.link !== "#" ? (
+                <a 
+                  href={project.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="text-xs font-mono font-bold text-black bg-white hover:bg-cyan-400 hover:text-white px-4 py-2 rounded transition-all duration-300 flex items-center gap-1 group-hover:scale-105"
+                >
+                  Ver Repositorio ➜
+                </a>
+              ) : (
+                <span class="text-xs font-mono text-gray-500 border border-white/10 px-4 py-2 rounded cursor-default">
+                  Página Actual
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const projectCards = document.querySelectorAll(".project-card");
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Reset button styles
+      filterButtons.forEach((b) => {
+        b.classList.remove("border-cyan-400", "text-cyan-400", "bg-cyan-400/5", "shadow-[0_0_10px_rgba(34,211,238,0.15)]");
+        b.classList.add("border-white/10", "text-gray-400");
+      });
+
+      // Highlight active button
+      btn.classList.remove("border-white/10", "text-gray-400");
+      btn.classList.add("border-cyan-400", "text-cyan-400", "bg-cyan-400/5", "shadow-[0_0_10px_rgba(34,211,238,0.15)]");
+
+      const filterValue = btn.getAttribute("data-filter");
+
+      projectCards.forEach((card) => {
+        const cardCategory = card.getAttribute("data-category");
+
+        if (filterValue === "todos" || cardCategory === filterValue || (filterValue === "backend" && cardCategory === "backend") || (filterValue === "escritorio" && cardCategory === "backend")) {
+          // Show card with smooth animation
+          (card as HTMLElement).style.display = "flex";
+          setTimeout(() => {
+            (card as HTMLElement).style.opacity = "1";
+            (card as HTMLElement).style.transform = "scale(1)";
+          }, 50);
+        } else {
+          // Hide card
+          (card as HTMLElement).style.opacity = "0";
+          (card as HTMLElement).style.transform = "scale(0.95)";
+          setTimeout(() => {
+            (card as HTMLElement).style.display = "none";
+          }, 300);
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const timeline = [
+  {
+    period: "2025 - Presente",
+    role: "Desarrollador Full Stack & Consultor Freelance",
+    company: "Proyectos Independientes",
+    description: "Diseño y desarrollo de aplicaciones web de alto rendimiento y herramientas de escritorio a medida. Uso extensivo de IA (como Gemini) en flujos de pair programming para maximizar eficiencia y calidad de código. Especializado en Vue.js, Astro y Node.js."
+  },
+  {
+    period: "2024",
+    role: "Desarrollador Frontend",
+    company: "Colegio Crismag",
+    description: "Lideré la migración del sitio institucional estático HTML/CSS a la arquitectura moderna de Astro, mejorando los tiempos de carga en un 80% y optimizando el posicionamiento SEO."
+  },
+  {
+    period: "2022 - 2023",
+    role: "Estudiante & Programador Junior",
+    company: "Formación Autónoma y Proyectos Académicos",
+    description: "Desarrollo de bases sólidas en JavaScript moderno (ES6+), patrones de diseño frontend, control de versiones con Git y consumo de APIs REST."
+  }
+];
+
+const interests = [
+  { name: "Inteligencia Artificial", icon: "🤖" },
+  { name: "Diseño UI/UX Futurista", icon: "🎨" },
+  { name: "Desarrollo Open Source", icon: "💻" },
+  { name: "Gaming & Hardware", icon: "🕹️" }
+];
+---
+
+<Layout title="Sobre Mí | David Guevara">
+  <section class="py-10 max-w-4xl mx-auto">
+    <!-- Header de Sección -->
+    <h2 class="text-3xl font-bold text-white mb-10 flex items-center gap-2 font-mono">
+      <span class="text-cyan-400">./</span> SOBRE_MI
+      <span class="text-gray-600 text-sm font-normal ml-auto hidden md:block">Acceso: Concedido</span>
+    </h2>
+
+    <!-- Grid Principal (Bio + Info rápida) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      
+      <!-- Lado Izquierdo: Info rápida -->
+      <div class="md:col-span-1 border border-white/10 bg-black/40 rounded-lg p-6 flex flex-col items-center justify-center text-center backdrop-blur-sm">
+        <div class="w-32 h-32 rounded-full border-4 border-purple-500/50 overflow-hidden mb-4 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+          <img src="/perfil.jpg" alt="David Guevara" class="w-full h-full object-cover" />
+        </div>
+        <h3 class="text-xl font-bold text-white">David Guevara</h3>
+        <p class="text-xs text-cyan-400 font-mono mt-1">@Caronte12715</p>
+        
+        <div class="w-full border-t border-white/5 my-4"></div>
+        
+        <ul class="w-full text-left font-mono text-xs space-y-2 text-gray-400">
+          <li><span class="text-purple-400">Nivel:</span> Full-Stack Developer</li>
+          <li><span class="text-purple-400">Ubicación:</span> El Salvador</li>
+          <li><span class="text-purple-400">Enfoque:</span> Astro, Vue & Node.js</li>
+          <li><span class="text-purple-400">Modo:</span> IA-Assisted Coding</li>
+        </ul>
+      </div>
+
+      <!-- Lado Derecho: Bio -->
+      <div class="md:col-span-2 flex flex-col justify-center space-y-6">
+        <h3 class="text-2xl font-bold text-white font-mono">
+          &lt;Presentación /&gt;
+        </h3>
+        <p class="text-gray-300 leading-relaxed text-lg">
+          Soy un desarrollador web apasionado por crear interfaces que no solo se vean bien, sino que funcionen de manera óptima y fluida. Me especializo en la integración de arquitecturas frontend modernas utilizando <span class="text-cyan-400 font-semibold">Astro</span> y <span class="text-cyan-400 font-semibold">Vue.js</span>, y el desarrollo de APIs robustas basadas en <span class="text-purple-400 font-semibold">Node.js</span> y WebSockets.
+        </p>
+        <p class="text-gray-300 leading-relaxed text-lg">
+          Creo firmemente en la sinergia entre el desarrollador y la Inteligencia Artificial. Utilizo herramientas avanzadas de IA para acelerar el prototipado, depurar código de manera eficiente y automatizar tareas repetitivas, permitiéndome concentrarme en la arquitectura del software, la experiencia de usuario (UX) y el rendimiento óptimo de las aplicaciones.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sección: Trayectoria / Timeline -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-white mb-8 font-mono flex items-center gap-2">
+        <span class="text-cyan-400">&gt;_</span> TRAYECTORIA_LABORAL
+      </h3>
+      
+      <div class="border-l-2 border-cyan-400/30 ml-4 md:ml-6 space-y-12 relative">
+        {timeline.map((item) => (
+          <div class="relative pl-8 md:pl-10">
+            <!-- Marcador de punto en la línea -->
+            <div class="absolute left-[-9px] top-1.5 w-4 h-4 rounded-full border-2 border-cyan-400 bg-[#0a0a0a] shadow-[0_0_8px_rgba(34,211,238,0.8)]"></div>
+            
+            <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-2">
+              <h4 class="text-xl font-bold text-white font-mono group-hover:text-cyan-300 transition-colors">
+                {item.role}
+              </h4>
+              <span class="text-xs font-mono text-cyan-400 border border-cyan-400/30 px-2 py-0.5 rounded bg-cyan-400/5 shadow-[0_0_5px_rgba(34,211,238,0.1)] self-start md:self-auto">
+                {item.period}
+              </span>
+            </div>
+            <p class="text-sm font-mono text-purple-400 mb-2">{item.company}</p>
+            <p class="text-gray-400 text-sm md:text-base leading-relaxed max-w-3xl">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Sección: Intereses / Pasatiempos -->
+    <div>
+      <h3 class="text-2xl font-bold text-white mb-8 font-mono flex items-center gap-2">
+        <span class="text-purple-500">➜</span> INTERESES_Y_ENFOQUE
+      </h3>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {interests.map((interest) => (
+          <div class="border border-white/10 bg-black/40 hover:border-purple-500/50 p-4 rounded-lg flex flex-col items-center justify-center text-center transition-all duration-300 group hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+            <span class="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{interest.icon}</span>
+            <span class="text-sm font-mono text-gray-300 group-hover:text-white transition-colors">{interest.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
