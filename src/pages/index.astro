@@ -684,14 +684,30 @@ import Layout from '../layouts/Layout.astro';
 		const defaultColor = new THREE.Color(0x050505);
 		let targetIntensity = 0.0;
 
+		let animationFrameId: number;
+		let isVisible = true;
+
 		function animate(time: number) {
-			requestAnimationFrame(animate);
+			if (!isVisible) return;
+			
+			animationFrameId = requestAnimationFrame(animate);
 			uniforms.uTime.value = time * 0.001;
 			uniforms.uColor.value.lerp(targetColor, 0.04);
 			uniforms.uIntensity.value +=
 				(targetIntensity - uniforms.uIntensity.value) * 0.05;
 			renderer.render(scene, camera);
 		}
+		
+		const observer = new IntersectionObserver((entries) => {
+			isVisible = entries[0].isIntersecting;
+			if (isVisible) {
+				requestAnimationFrame(animate);
+			} else if (animationFrameId) {
+				cancelAnimationFrame(animationFrameId);
+			}
+		}, { threshold: 0.0 });
+		
+		observer.observe(canvas);
 		requestAnimationFrame(animate);
 
 		setTimeout(() => {
