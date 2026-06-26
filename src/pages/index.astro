@@ -127,17 +127,18 @@ import Layout from '../layouts/Layout.astro';
 	}
 	
 	.top-left-socials {
-		position: fixed;
-		top: var(--xxl);
+		position: absolute;
+		top: 80px;
 		left: var(--xxl);
 		z-index: 100;
 		display: flex;
 		gap: var(--sm);
 
-		@media (max-width: 600px) {
-			top: var(--md);
+		@media (max-width: 768px) {
+			top: 80px;
 			left: var(--md);
 			gap: var(--xs);
+			flex-direction: column;
 		}
 
 		.social-link {
@@ -165,13 +166,13 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	.top-right-share {
-		position: fixed;
-		top: var(--xxl);
+		position: absolute;
+		top: 80px;
 		right: var(--xxl);
 		z-index: 100;
 
-		@media (max-width: 600px) {
-			top: var(--md);
+		@media (max-width: 768px) {
+			top: 80px;
 			right: var(--md);
 		}
 
@@ -670,6 +671,15 @@ import Layout from '../layouts/Layout.astro';
 			uniforms.uMouse.value.set(x, y);
 		});
 
+		window.addEventListener("touchmove", (e) => {
+			if (e.touches.length > 0) {
+				const touch = e.touches[0];
+				const x = touch.clientX / window.innerWidth;
+				const y = 1.0 - touch.clientY / window.innerHeight;
+				uniforms.uMouse.value.set(x, y);
+			}
+		}, { passive: true });
+
 		let targetColor = new THREE.Color(0x050505);
 		const defaultColor = new THREE.Color(0x050505);
 		let targetIntensity = 0.0;
@@ -690,17 +700,24 @@ import Layout from '../layouts/Layout.astro';
 
 		const cards = document.querySelectorAll(".app-card");
 		cards.forEach((card) => {
-			card.addEventListener("mouseenter", () => {
+			const activateCard = () => {
 				const hex = card.getAttribute("data-hex");
 				const mode = parseInt(card.getAttribute("data-mode") || '0');
 				if (hex) targetColor.set(hex);
 				uniforms.uMode.value = mode;
 				targetIntensity = 1.0;
-			});
-			card.addEventListener("mouseleave", () => {
+			};
+			const deactivateCard = () => {
 				targetColor.copy(defaultColor);
 				targetIntensity = 0.0;
-			});
+			};
+
+			card.addEventListener("mouseenter", activateCard);
+			card.addEventListener("mouseleave", deactivateCard);
+			card.addEventListener("touchstart", activateCard, { passive: true });
+			card.addEventListener("touchend", () => {
+				setTimeout(deactivateCard, 600);
+			}, { passive: true });
 		});
 	});
 </script>
